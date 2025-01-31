@@ -15,11 +15,25 @@ export const App = () => {
     // 配列の分割代入で受け取る
     // stateの初期値は0にしてある
     const [num, setNum] = useState(0);
+    const [isShowFace, setIsShowFace] = useState(false);
     // return内でのイベントはjsの関数として{}で、スタイルはjsのオブジェクトとして
     const onClickCountUp = () => {
-        setNum(num + 1);
         setNum((prev)=>prev+1);
     };
+    const onClickToggle = () => {
+        setIsShowFace(!isShowFace);
+    };
+
+    // カウントアップボタンを押して、stateが3の倍数の時だけ顔を表示するプログラム
+    // isShowFace ||...　がないと無限レンダリングになってしまう
+    if (num>0){
+        if (num%3 === 0){
+            isShowFace || setIsShowFace(true);
+        } else {
+            isShowFace && setIsShowFace(false);
+        }
+    }
+    
 
     return (
         <div>
@@ -28,6 +42,9 @@ export const App = () => {
             <ColorfulMessage color="green">元気です！</ColorfulMessage>
             <button onClick={onClickCountUp}>カウントアップ</button>
             <p>{num}</p>
+
+            <button onClick={onClickToggle}>on/off</button>
+            {isShowFace && <p>Σ('◉⌓◉’)</p>}
         </div>
     );
 };
