@@ -1,5 +1,5 @@
 // use~という関数（フックと呼ばれる）
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // reactでは、画面の要素はすべて関数（コンポーネント）で書く！！
 // returnの中身は必ずタグで囲む
@@ -24,15 +24,24 @@ export const App = () => {
         setIsShowFace(!isShowFace);
     };
 
-    // カウントアップボタンを押して、stateが3の倍数の時だけ顔を表示するプログラム
-    // isShowFace ||...　がないと無限レンダリングになってしまう
-    if (num>0){
-        if (num%3 === 0){
-            isShowFace || setIsShowFace(true);
-        } else {
-            isShowFace && setIsShowFace(false);
+    // useEffectの第一引数が関数、第二引数は配列（依存配列）
+    // 配列に変更があった時だけ実行される！！
+    // 空配列を引数にすると最初（マウント時）しか実行されない
+    useEffect(() => {
+        console.log("--useEffect--");
+        // カウントアップボタンを押して、stateが3の倍数の時だけ顔を表示するプログラム
+        // isShowFace ||...　がないと無限レンダリングになってしまう
+        // さらに、useEffectの中に入れたことで、この処理の「関心」がnumだけになったので
+        // on/offボタンと被らなくなった
+        if (num>0){
+            if (num%3 === 0){
+                isShowFace || setIsShowFace(true);
+            } else {
+                isShowFace && setIsShowFace(false);
+            }
         }
-    }
+    }, [num]);
+
     
 
     return (

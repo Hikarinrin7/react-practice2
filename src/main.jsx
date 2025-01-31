@@ -11,7 +11,7 @@ const root = createRoot(rootElement);
 
 // root.render();の中身にhtmlみたいに記述する（jsx記法）
 root.render(
-    <StrictMode>
+    // <StrictMode>
         <App />
-    </StrictMode>
+    // </StrictMode>
 );
